@@ -1,14 +1,39 @@
 import { CardServicesProps } from "@/interfaces/CardServicesProps";
 import { stylesServices } from "@/styles/stylesServices";
 import { Feather } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-
 
 interface CardServicesProp {
   onData: CardServicesProps;
 }
 
 const CardServices = ({ onData }: CardServicesProp) => {
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    function formatDate() {
+      const data = new Date(onData.created_at);
+      const day = data.getDay();
+      const month = data.getMonth();
+      const year = data.getFullYear();
+
+      if (day < 10 && month < 10) {
+        return `0${day}/0${month}/${year}`;
+      }
+      if (day < 10 ){
+        return `0${day}/${month}/${year}`;
+      }
+      if (month < 10 ){
+        return `${day}/0${month}/${year}`;
+      }
+      return `${day}/${month}/${year}`;
+    }
+
+    const data = formatDate();
+
+    setDate(data);
+  }, []);
   return (
     <View style={stylesServices.containerCard}>
       <Text style={stylesServices.title}>{onData.name}</Text>
@@ -18,7 +43,7 @@ const CardServices = ({ onData }: CardServicesProp) => {
             <Feather name="tool" />
             <Text style={stylesServices.text18}>Itens Resolvidos</Text>
           </View>
-          <Text style={stylesServices.data}>{onData.created_at}</Text>
+          <Text style={stylesServices.data}>{date}</Text>
         </View>
         <View>
           {onData.resolvedItems?.map((item) => (
