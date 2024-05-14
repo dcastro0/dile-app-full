@@ -9,11 +9,11 @@ interface CanceledServicesProps {
 }
 
 const CardCanceled = ({ onData }: CanceledServicesProps) => {
-  const [canceled, setCanceled] = useState<number>(0);
+  const [canceled, setCanceled] = useState<number>();
 
   useEffect(() => {
     setCanceled(onData.canceled);
-  }, []);
+  }, [onData]);
 
   return (
     <View style={stylesHome.cardCanceled}>

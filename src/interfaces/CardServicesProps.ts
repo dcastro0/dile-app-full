@@ -5,18 +5,18 @@ interface ResolvedItem {
 }
 interface CardServicesProps {
   id: number;
-  created_at: string;
-  update_at: string;
+  created_at: Date;
+  date_create: Date;
   name: string;
   name_client: string;
   phone: string;
   price: number;
   observation: string;
   progress: number;
-  completed: number;
-  archived: number;
+  completed: boolean;
+  archived: boolean;
   category_id: number;
-  resolvedItems: ResolvedItem[];
+  resolved_item: ResolvedItem[];
 }
 
 export { CardServicesProps };

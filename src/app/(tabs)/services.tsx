@@ -12,9 +12,9 @@ const Services: React.FC<ScreenProps> = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get("http://localhost:8081/service");
+      const response = await axios.get("http://localhost:8081/api/service");
       setDataCompleted(response.data);
-      console.log(dataCompleted);
+      console.log(response.data);
     };
     fetch();
   }, []);

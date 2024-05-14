@@ -18,10 +18,17 @@ const Home: React.FC<ScreenProps> = () => {
     inProgress: 0,
     canceled: 0,
   });
-  
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get("http://localhost:8081/api/home");
+      setDataCompleted(response.data)
+      console.log(response.data);
+    };
+    fetch();
+  }, []);
+
   return (
     <SafeAreaView style={stylesHome.container}>
-      
       <View style={stylesHome.line}></View>
       <View style={stylesHome.cards}>
         <CardCompletedServices onData={dataCompleted} />

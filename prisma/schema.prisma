@@ -22,16 +22,16 @@ model User {
 }
 
 model Category {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
   name       String
-  services   Service?
+  services   Service[]
 }
 
 model Service {
   id            Int            @id @default(autoincrement())
   created_at    DateTime       @default(now())
-  update_at     DateTime
+  date_create   DateTime       @db.Date
   name          String
   name_client   String
   phone         String
@@ -41,7 +41,7 @@ model Service {
   completed     Boolean        @default(false)
   archived      Boolean        @default(false)
   categories    Category       @relation(fields: [category_id], references: [id])
-  category_id   Int            @unique
+  category_id   Int
   resolved_item ResolvedItem[]
 }
 
@@ -49,5 +49,5 @@ model ResolvedItem {
   id         Int     @id @default(autoincrement())
   name       String
   services   Service @relation(fields: [service_id], references: [id])
-  service_id Int     @unique
+  service_id Int
 }

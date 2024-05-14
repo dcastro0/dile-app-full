@@ -2,12 +2,21 @@ import { CardCompleted } from "@/components/CardCompleted";
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
 import { ScreenProps } from "@/types/ScreenProps";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 
 const Completed: React.FC<ScreenProps> = () => {
   const [dataCompleted, setDataCompleted] = useState<CardCompletedProps[]>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get("http://localhost:8081/api/completed");
+      setDataCompleted(response.data);
+      console.log(response.data);
+    };
+    fetch();
+  }, []);
   
   return (
     <ScrollView style={stylesCompleted.scroll}>

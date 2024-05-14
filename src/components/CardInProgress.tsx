@@ -9,11 +9,11 @@ interface inProgressProps {
 }
 
 const CardInProgress = ({ onData }: inProgressProps) => {
-  const [inProgress, setInProgress] = useState<number>(0);
+  const [inProgress, setInProgress] = useState<number>();
 
   useEffect(() => {
     setInProgress(onData.inProgress);
-  }, []);
+  }, [onData]);
   return (
     <View style={stylesHome.cardInProgress}>
       <Feather name="rotate-cw" size={40} color="#fff" />

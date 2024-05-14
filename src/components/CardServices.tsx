@@ -10,12 +10,12 @@ interface CardServicesProp {
 
 const CardServices = ({ onData }: CardServicesProp) => {
   const [date, setDate] = useState("");
-
+  
   useEffect(() => {
     function formatDate() {
       const data = new Date(onData.created_at);
       const day = data.getDay();
-      const month = data.getMonth();
+      const month = data.getMonth() +1;
       const year = data.getFullYear();
 
       if (day < 10 && month < 10) {
@@ -46,10 +46,10 @@ const CardServices = ({ onData }: CardServicesProp) => {
           <Text style={stylesServices.data}>{date}</Text>
         </View>
         <View>
-          {onData.resolvedItems?.map((item) => (
-            <View style={stylesServices.row}>
+          {onData.resolved_item?.map((item) => (
+            <View style={stylesServices.row} key={item.id}>
               <Feather name="arrow-right" />
-              <Text style={stylesServices.text18} key={item.id}>
+              <Text style={stylesServices.text18} >
                 {item.name}
               </Text>
             </View>
