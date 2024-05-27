@@ -1,17 +1,15 @@
 import { StyleSheet } from "react-native";
 
 const stylesServices = StyleSheet.create({
-  scroll:{ 
-    backgroundColor: '#e7eaef',
-    
+  scroll: {
+    backgroundColor: "#e7eaef",
   },
   container: {
     flex: 1,
     gap: 10,
     padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   containerCard: {
@@ -65,19 +63,19 @@ const stylesServices = StyleSheet.create({
     fontSize: 18,
   },
 
-  button :{
-    backgroundColor: '#41AE76',
-    flexDirection: 'row',
+  button: {
+    backgroundColor: "#41AE76",
+    flexDirection: "row",
     padding: 10,
     borderRadius: 10,
-    alignItems: 'center',
-    alignSelf: 'flex-end'
+    alignItems: "center",
+    alignSelf: "flex-end",
   },
-  
+
   textWhite: {
     fontSize: 18,
-    color: '#fff'
-  }
+    color: "#fff",
+  },
 });
 
 export { stylesServices };

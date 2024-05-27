@@ -1,8 +1,7 @@
 import { CardServicesProps } from "@/interfaces/CardServicesProps";
 import { stylesServices } from "@/styles/stylesServices";
 import { Feather } from "@expo/vector-icons";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 interface CardServicesProp {
@@ -30,7 +29,7 @@ const CardServices = ({ onData }: CardServicesProp) => {
   }, [onData.created_at]);
 
   return (
-    <View style={stylesServices.containerCard}>
+    <View style={{ ...stylesServices.containerCard, pointerEvents: 'auto' }}>
       <Text style={stylesServices.title}>{onData.name}</Text>
       <View style={stylesServices.card}>
         <View style={stylesServices.row}>
