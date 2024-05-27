@@ -1,11 +1,12 @@
 import { ButtonProps } from "@/interfaces/ButtonProps";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, Text, Pressable } from "react-native";
 
 const MyButton = ({ title, ...rest }: ButtonProps) => {
   return (
-    <TouchableOpacity style={styles.button} {...rest}>
+    <Pressable style={styles.button} {...rest}>
       <Text style={styles.textWhite}>{title}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

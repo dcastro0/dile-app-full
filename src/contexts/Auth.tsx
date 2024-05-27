@@ -5,6 +5,7 @@ import { authService } from "@/services/authService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
+import React from "react";
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 

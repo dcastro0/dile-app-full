@@ -2,7 +2,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { stylesHeader } from "@/styles/stylesHeader";
 import { Feather } from "@expo/vector-icons";
 import { Redirect, Tabs } from "expo-router";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { Image, Text, Pressable, View } from "react-native";
 
 const Layout = () => {
   const { authData, loading } = useAuth();
@@ -32,22 +33,22 @@ const Layout = () => {
         },
         headerTitleAlign: "center",
         headerLeft: () => (
-          <TouchableOpacity>
+          <Pressable>
             <Image
               source={require("@/assets/logo.png")}
               style={stylesHeader.logo}
             />
-          </TouchableOpacity>
+          </Pressable>
         ),
         headerRight: () => (
-          <TouchableOpacity>
+          <Pressable>
             <Feather
               name="bell"
               color="#122F61"
               size={30}
               style={{ marginHorizontal: 20 }}
             />
-          </TouchableOpacity>
+          </Pressable>
         ),
         headerTitleStyle: {
           color: "#122F61",

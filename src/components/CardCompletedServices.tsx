@@ -1,6 +1,7 @@
 import { DataCompletedProps } from "@/interfaces/DataCompletedProps";
 import { stylesHome } from "@/styles/stylesHome";
 import { Feather } from "@expo/vector-icons";
+import React from "react";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 

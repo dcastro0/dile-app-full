@@ -3,6 +3,7 @@ import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
 import { ScreenProps } from "@/types/ScreenProps";
 import axios from "axios";
+import React from "react";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 

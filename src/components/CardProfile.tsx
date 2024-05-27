@@ -1,6 +1,7 @@
 import { AuthData } from "@/interfaces/AuthData";
 import { stylesProfile } from "@/styles/stylesProfile";
 import { Feather } from "@expo/vector-icons";
+import React from "react";
 import { Text, View } from "react-native";
 
 

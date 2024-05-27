@@ -1,5 +1,6 @@
 import { InputProps } from "@/interfaces/InputProps";
 import { stylesLogin } from "@/styles/stylesLogin";
+import React from "react";
 import { useEffect, useRef } from "react";
 import { TextInput } from "react-native";
 

@@ -7,6 +7,7 @@ import { SplashScreen, router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { useFonts, Aldrich_400Regular } from "@expo-google-fonts/aldrich";
+import React from "react";
 
 const Login = () => {
   const [username, setUsername] = useState("");

@@ -41,7 +41,7 @@ model Service {
   completed     Boolean        @default(false)
   archived      Boolean        @default(false)
   categories    Category       @relation(fields: [category_id], references: [id])
-  category_id   Int
+  category_id   Int            @default(1)
   resolved_item ResolvedItem[]
 }
 

@@ -1,6 +1,7 @@
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
 import { Feather } from "@expo/vector-icons";
+import React from "react";
 import { Text, View } from "react-native";
 
 
