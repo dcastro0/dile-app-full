@@ -1,10 +1,10 @@
-import { ButtonProps } from "@/interfaces/ButtonProps";
 import React from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
+import { ButtonProps } from "@/interfaces/ButtonProps";
 
-const MyButton = ({ title, ...rest }: ButtonProps) => {
+const MyButton: React.FC<ButtonProps> = ({ title, ...buttonProps }) => {
   return (
-    <Pressable style={styles.button} {...rest}>
+    <Pressable style={styles.button} {...buttonProps}>
       <Text style={styles.textWhite}>{title}</Text>
     </Pressable>
   );

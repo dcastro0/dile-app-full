@@ -4,15 +4,14 @@ import { ResolvedItem } from "@prisma/client";
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-
-    const { 
-      name, 
-      name_client, 
-      phone, 
-      price, 
-      observation, 
-      progress, 
-      resolved_item 
+    const {
+      name,
+      name_client,
+      phone,
+      price,
+      observation,
+      progress,
+      resolved_item,
     } = data;
 
     if (!name || !name_client || !phone || !price || progress === undefined) {
@@ -22,17 +21,17 @@ export async function POST(request: Request) {
       );
     }
 
-   
     const service = await db.service.create({
       data: {
         name,
         name_client,
         phone,
-        date_create: new Date().toISOString(), 
+        date_create: new Date().toISOString(),
         price: parseFloat(price),
         observation,
         progress,
-        category_id: 1, 
+        completed: progress === 8 ? true : false,
+        category_id: 1,
         resolved_item: {
           create: resolved_item.map((item: ResolvedItem) => ({
             name: item.name,
@@ -47,6 +46,8 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify(service), { status: 201 });
   } catch (error) {
     console.error("Error creating service:", error);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+      status: 500,
+    });
   }
 }

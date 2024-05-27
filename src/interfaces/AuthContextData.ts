@@ -1,11 +1,16 @@
 import { AuthData } from "./AuthData";
 
-
-
+/**
+ * Interface que define o formato dos dados do contexto de autenticação.
+ */
 interface AuthContextData {
+  /** Dados de autenticação do usuário. */
   authData?: AuthData;
+  /** Função para fazer login. */
   signIn: (username: string, password: string) => Promise<void>;
+  /** Função para fazer logout. */
   signOut: () => Promise<void>;
+  /** Indicador de carregamento. */
   loading: boolean;
 }
 

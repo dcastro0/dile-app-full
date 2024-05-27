@@ -1,10 +1,9 @@
-import { MyCardProps } from "@/interfaces/MyCardProps";
-import { stylesHome } from "@/styles/stylesHome";
 import React from "react";
 import { Text, View } from "react-native";
+import { MyCardProps } from "@/interfaces/MyCardProps";
+import { stylesHome } from "@/styles/stylesHome";
 
-
-const MyCard = ({ amount, title }: MyCardProps) => {
+const MyCard: React.FC<MyCardProps> = ({ amount, title }) => {
   return (
     <View style={stylesHome.myCard}>
       <Text style={stylesHome.textBlue24}>{amount}</Text>

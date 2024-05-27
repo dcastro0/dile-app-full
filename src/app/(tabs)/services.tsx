@@ -1,28 +1,43 @@
+import React, { useEffect, useState, useCallback } from "react";
+import { ScrollView, Text, View, RefreshControl } from "react-native";
+import { Link } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import axios from "axios";
 import { CardServices } from "@/components/CardServices";
 import { CardServicesProps } from "@/interfaces/CardServicesProps";
 import { stylesServices } from "@/styles/stylesServices";
 import { ScreenProps } from "@/types/ScreenProps";
-import { Feather } from "@expo/vector-icons";
-import axios from "axios";
-import { Link } from "expo-router";
-import React from "react";
-import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
 
 const Services: React.FC<ScreenProps> = () => {
   const [dataCompleted, setDataCompleted] = useState<CardServicesProps[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await axios.get("http://localhost:8081/api/service");
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("https://cce8-38-183-120-2.ngrok-free.app/api/service");
       setDataCompleted(response.data);
       console.log(response.data);
-    };
-    fetch();
+    } catch (error) {
+      console.error("Erro ao buscar os serviços:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchData().then(() => setRefreshing(false));
   }, []);
 
   return (
-    <ScrollView style={stylesServices.scroll}>
+    <ScrollView
+      style={stylesServices.scroll}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View style={stylesServices.container}>
         {dataCompleted.length > 0 ? (
           dataCompleted.map((item) => (

@@ -1,30 +1,32 @@
+import React, { createContext, useEffect, useState } from "react";
+import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContextData } from "@/interfaces/AuthContextData";
 import { AuthData } from "@/interfaces/AuthData";
 import { AuthProviderProps } from "@/interfaces/AuthProviderProps";
 import { authService } from "@/services/authService";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useEffect, useState } from "react";
-import { Alert } from "react-native";
-import React from "react";
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authData, setAuthData] = useState<AuthData>();
+  const [authData, setAuthData] = useState<AuthData | undefined>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadFromStorage();
+    loadAuthDataFromStorage();
   }, []);
 
-  async function loadFromStorage() {
-    const auth = await AsyncStorage.getItem("@AuthData");
-
-    if (auth) {
-      setAuthData(JSON.parse(auth) as AuthData);
+  async function loadAuthDataFromStorage() {
+    try {
+      const auth = await AsyncStorage.getItem("@AuthData");
+      if (auth) {
+        setAuthData(JSON.parse(auth));
+      }
+    } catch (error) {
+      console.error("Erro ao carregar dados de autenticação do armazenamento:", error);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   async function signIn(username: string, password: string): Promise<void> {
@@ -33,14 +35,13 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setAuthData(auth);
       AsyncStorage.setItem("@AuthData", JSON.stringify(auth));
     } catch (error: any) {
-      Alert.alert(error.message, "tente novamente");
+      Alert.alert("Erro ao efetuar login", error.message);
     }
   }
 
   async function signOut(): Promise<void> {
     setAuthData(undefined);
     AsyncStorage.removeItem("@AuthData");
-    return;
   }
 
   return (

@@ -1,7 +1,10 @@
-import { TouchableOpacityProps } from "react-native";
+import { PressableProps } from "react-native";
 
-
-interface ButtonProps extends TouchableOpacityProps {
+/**
+ * Interface que define as propriedades esperadas por um botão personalizado.
+ */
+interface ButtonProps extends PressableProps {
+  /** Texto exibido no botão. */
   title: string;
 }
 

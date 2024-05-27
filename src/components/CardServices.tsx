@@ -1,35 +1,32 @@
-import { CardServicesProps } from "@/interfaces/CardServicesProps";
-import { stylesServices } from "@/styles/stylesServices";
-import { Feather } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { CardServicesProps } from "@/interfaces/CardServicesProps";
+import { stylesServices } from "@/styles/stylesServices";
 
 interface CardServicesProp {
   onData: CardServicesProps;
 }
 
-const CardServices = ({ onData }: CardServicesProp) => {
-  const [date, setDate] = useState("");
+const CardServices: React.FC<CardServicesProp> = ({ onData }) => {
+  const [date, setDate] = useState<string>("");
 
   useEffect(() => {
-    function formatDate() {
-      const data = new Date(onData.created_at);
-      const day = data.getDate();
-      const month = data.getMonth() + 1;
-      const year = data.getFullYear();
-
-      const formattedDay = day < 10 ? `0${day}` : day;
-      const formattedMonth = month < 10 ? `0${month}` : month;
-
-      return `${formattedDay}/${formattedMonth}/${year}`;
-    }
-
-    const formattedDate = formatDate();
-    setDate(formattedDate);
+    formatDate();
   }, [onData.created_at]);
 
+  const formatDate = () => {
+    const data = new Date(onData.created_at);
+    const formattedDate = `${data.getDate().toString().padStart(2, "0")}/${(
+      data.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}/${data.getFullYear()}`;
+    setDate(formattedDate);
+  };
+
   return (
-    <View style={{ ...stylesServices.containerCard, pointerEvents: 'auto' }}>
+    <View style={{ ...stylesServices.containerCard, pointerEvents: "auto" }}>
       <Text style={stylesServices.title}>{onData.name}</Text>
       <View style={stylesServices.card}>
         <View style={stylesServices.row}>
@@ -39,14 +36,16 @@ const CardServices = ({ onData }: CardServicesProp) => {
           </View>
           <Text style={stylesServices.data}>{date}</Text>
         </View>
-        <View>
-          {onData.resolved_item?.map((item) => (
-            <View style={stylesServices.row} key={item.id}>
-              <Feather name="arrow-right" size={20} />
-              <Text style={stylesServices.text18}>{item.name}</Text>
-            </View>
-          ))}
-        </View>
+        {onData.resolved_item && (
+          <View>
+            {onData.resolved_item.map((item) => (
+              <View style={stylesServices.row} key={item.id}>
+                <Feather name="arrow-right" size={20} />
+                <Text style={stylesServices.text18}>{item.name}</Text>
+              </View>
+            ))}
+          </View>
+        )}
         <View>
           <View style={stylesServices.row}>
             <Feather name="file-text" size={20} />

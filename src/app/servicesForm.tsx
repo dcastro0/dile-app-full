@@ -42,7 +42,7 @@ export default function App() {
   const onSubmit = async (data: FormData) => {
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/service_post",
+        "https://cce8-38-183-120-2.ngrok-free.app/api/service_post",
         data
       );
       console.log(response.data);

@@ -20,7 +20,7 @@ const Home: React.FC<ScreenProps> = () => {
   });
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get("http://localhost:8081/api/home");
+      const response = await axios.get("https://cce8-38-183-120-2.ngrok-free.app/api/home");
       setDataCompleted(response.data)
       console.log(response.data);
     };
