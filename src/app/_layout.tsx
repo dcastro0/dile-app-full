@@ -49,6 +49,14 @@ export default function Layout() {
           name="servicesForm"
           options={{ headerShown: true, title: "SERVIÇOS" }}
         />
+        <Stack.Screen
+          name="details/[data]"
+          options={{ headerShown: true, title: "Detalhes" }}
+        />
+        <Stack.Screen
+          name="updateForm/[onData]"
+          options={{ headerShown: true, title: "ATUALIZAR" }}
+        />
       </Stack>
     </AuthProvider>
   );

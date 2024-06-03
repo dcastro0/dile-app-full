@@ -3,12 +3,12 @@ import { CardInProgress } from "@/components/CardInProgress";
 import { CardCanceled } from "@/components/CardsCanceled";
 import { MyCard } from "@/components/MyCard";
 import { DataCompletedProps } from "@/interfaces/DataCompletedProps";
+import { api } from "@/server/api";
 import { stylesHome } from "@/styles/stylesHome";
 import { ScreenProps } from "@/types/ScreenProps";
 import { Feather } from "@expo/vector-icons";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home: React.FC<ScreenProps> = () => {
@@ -18,22 +18,36 @@ const Home: React.FC<ScreenProps> = () => {
     inProgress: 0,
     canceled: 0,
   });
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await axios.get("https://cce8-38-183-120-2.ngrok-free.app/api/home");
-      setDataCompleted(response.data)
+  const [loading, setLoading] = useState<boolean>(true);
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/home");
+      setDataCompleted(response.data);
+      setLoading(false);
       console.log(response.data);
-    };
-    fetch();
+    } catch (error) {
+      console.error("Erro ao buscar os dados:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (
     <SafeAreaView style={stylesHome.container}>
       <View style={stylesHome.line}></View>
       <View style={stylesHome.cards}>
-        <CardCompletedServices onData={dataCompleted} />
-        <CardInProgress onData={dataCompleted} />
-        <CardCanceled onData={dataCompleted} />
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            <CardCompletedServices onData={dataCompleted} />
+            <CardInProgress onData={dataCompleted} />
+            <CardCanceled onData={dataCompleted} />
+          </>
+        )}
       </View>
       <View style={stylesHome.line}></View>
 

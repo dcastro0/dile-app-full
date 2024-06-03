@@ -53,7 +53,6 @@ const stylesFormService = StyleSheet.create({
     backgroundColor: "#41AE76",
     marginTop: 5,
   },
-
   title: {
     fontSize: 25,
     color: "#606060",
@@ -61,7 +60,7 @@ const stylesFormService = StyleSheet.create({
   adicionar: {
     color: "#606060",
     fontSize: 18,
-    alignSelf: 'flex-end'
+    alignSelf: "flex-end",
   },
   textArea: {
     borderWidth: 1,
@@ -90,10 +89,31 @@ const stylesFormService = StyleSheet.create({
     height: 60,
   },
   delete: {
+    flex: 1,
     alignItems: "flex-end",
     flexDirection: "row",
   },
-  
+  error: {
+    color: "#ff0000",
+    fontStyle: "italic",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
 
 export { stylesFormService };

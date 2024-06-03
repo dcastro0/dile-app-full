@@ -1,33 +1,31 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "./colors";
 
 const stylesServices = StyleSheet.create({
-  scroll: {
-    backgroundColor: "#e7eaef",
-  },
   container: {
     flex: 1,
-    gap: 10,
     padding: 10,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 
   containerCard: {
-    width: "90%",
-    backgroundColor: "#EAF3FF",
+    backgroundColor: COLORS.background,
     alignItems: "center",
     padding: 20,
     borderRadius: 15,
+    elevation: 2,
   },
 
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#122f61",
+    color: COLORS.blue,
   },
 
   card: {
-    backgroundColor: "#C2CBD7",
+    minWidth: 280,
+    backgroundColor: COLORS.cardServiceSecondary,
     padding: 10,
     borderRadius: 15,
     borderBottomEndRadius: 0,
@@ -35,13 +33,13 @@ const stylesServices = StyleSheet.create({
   },
 
   textGreen: {
-    color: "#41AE76",
+    color: COLORS.green,
     fontSize: 22,
   },
 
   valor: {
     borderWidth: 1,
-    borderColor: "#c2cbd7",
+    borderColor: COLORS.cardServiceSecondary,
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
     padding: 3,
@@ -64,7 +62,7 @@ const stylesServices = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#41AE76",
+    backgroundColor: COLORS.green,
     flexDirection: "row",
     padding: 10,
     borderRadius: 10,
@@ -74,7 +72,11 @@ const stylesServices = StyleSheet.create({
 
   textWhite: {
     fontSize: 18,
-    color: "#fff",
+    color: COLORS.white,
+  },
+
+  description: {
+    maxWidth: 280,
   },
 });
 

@@ -8,12 +8,15 @@ import { stylesFormService } from "@/styles/styleFormService";
 import serviceSchema from "@/schemas/serviceSchema";
 import { MyController } from "@/components/MyController";
 import { api } from "@/server/api";
+import { router, useLocalSearchParams } from "expo-router";
 
 type FormData = z.infer<typeof serviceSchema>;
 
-export default function ServicesForm() {
+const UpdateForm = () => {
+  const { onData } = useLocalSearchParams();
+  const parsedData = JSON.parse(onData as string);
+  const id = parseInt(parsedData.id);
   const [showConfirmation, setShowConfirmation] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -22,13 +25,14 @@ export default function ServicesForm() {
   } = useForm<FormData>({
     resolver: zodResolver(serviceSchema),
     defaultValues: {
-      name: "",
-      name_client: "",
-      phone: "",
-      price: "",
-      observation: "",
-      progress: 0,
-      resolved_item: [],
+      id: id,
+      name: parsedData.name,
+      name_client: parsedData.name_client,
+      phone: parsedData.phone,
+      price: parsedData.price,
+      observation: parsedData.observation,
+      progress: parsedData.progress,
+      resolved_item: parsedData.resolved_item,
     },
   });
 
@@ -37,19 +41,19 @@ export default function ServicesForm() {
     name: "resolved_item",
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (formData: FormData) => {
     try {
-      const response = await api.post("/service_post", data);
+      const response = await api.put(`/service_update/${id}`, formData);
       console.log(response.data);
       setShowConfirmation(true);
       setTimeout(() => {
         setShowConfirmation(false);
-        reset();
+        router.back();
       }, 2000);
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error);
     } finally {
-      console.log(data);
+      console.log(parsedData);
     }
   };
 
@@ -77,7 +81,6 @@ export default function ServicesForm() {
                 style={[stylesFormService.input, { minWidth: 250 }]}
                 name={`resolved_item.${index}.name`}
               />
-
               <Pressable onPress={() => remove(index)}>
                 <Feather name="trash-2" size={20} color="#FF0000" />
               </Pressable>
@@ -100,13 +103,11 @@ export default function ServicesForm() {
           style={stylesFormService.input}
           name="name_client"
         />
-
         {errors.name_client && (
           <Text style={stylesFormService.error}>
             {errors.name_client.message}
           </Text>
         )}
-
         <MyController
           placeholder="Telefone"
           control={control}
@@ -114,7 +115,6 @@ export default function ServicesForm() {
           name="phone"
           inputMode="tel"
         />
-
         {errors.phone && (
           <Text style={stylesFormService.error}>{errors.phone.message}</Text>
         )}
@@ -127,11 +127,9 @@ export default function ServicesForm() {
           name="price"
           inputMode="numeric"
         />
-
         {errors.price && (
           <Text style={stylesFormService.error}>{errors.price.message}</Text>
         )}
-
         <Text style={stylesFormService.title}>Observação</Text>
         <MyController
           placeholder="Observação"
@@ -140,13 +138,11 @@ export default function ServicesForm() {
           multiline
           name="observation"
         />
-
         {errors.observation && (
           <Text style={stylesFormService.error}>
             {errors.observation.message}
           </Text>
         )}
-
         <Text style={stylesFormService.title}>Progresso</Text>
         <Controller
           control={control}
@@ -206,7 +202,6 @@ export default function ServicesForm() {
           name="progress"
         />
       </View>
-
       <Modal visible={showConfirmation} transparent={true} animationType="fade">
         <View style={stylesFormService.modalContainer}>
           <View style={stylesFormService.modalContent}>
@@ -218,4 +213,6 @@ export default function ServicesForm() {
       </Modal>
     </ScrollView>
   );
-}
+};
+
+export default UpdateForm;
