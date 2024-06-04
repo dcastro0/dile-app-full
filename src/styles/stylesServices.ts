@@ -49,6 +49,7 @@ const stylesServices = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: 5,
   },
 
@@ -59,6 +60,7 @@ const stylesServices = StyleSheet.create({
 
   text18: {
     fontSize: 18,
+    maxWidth: 280,
   },
 
   button: {

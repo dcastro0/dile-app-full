@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import {
   Text,
   View,
@@ -40,9 +40,11 @@ const Completed: React.FC<ScreenProps> = () => {
     fetchData().then(() => setRefreshing(false));
   }, [fetchData]);
 
-  const renderItem = ({ item }: ListRenderItemInfo<CardCompletedProps>) => {
-    return <CardCompleted onData={item} />;
-  };
+  const renderItem = useMemo(() => {
+    return ({ item }: ListRenderItemInfo<CardCompletedProps>) => {
+      return <CardCompleted onData={item} />;
+    };
+  }, []);
 
   return (
     <View style={stylesCompleted.container}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import {
   Text,
   View,
@@ -41,9 +41,11 @@ const Services: React.FC<ScreenProps> = () => {
     fetchData().then(() => setRefreshing(false));
   }, [fetchData]);
 
-  const renderItem = ({ item }: ListRenderItemInfo<CardServicesProps>) => {
-    return <CardServices onData={item} />;
-  };
+  const renderItem = useMemo(() => {
+    return ({ item }: ListRenderItemInfo<CardServicesProps>) => {
+      return <CardServices onData={item} />;
+    };
+  }, []);
 
   return (
     <View style={stylesServices.container}>

@@ -8,4 +8,5 @@ export const COLORS = {
   green: "#41ae76",
   cardServicePrimary: "#eaf3ff",
   cardServiceSecondary: "#c2cbd7",
+  red: "#FF0000",
 };

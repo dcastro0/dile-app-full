@@ -10,11 +10,12 @@ const stylesCompleted = StyleSheet.create({
   },
 
   card: {
-    width: "100%",
+    width: 280,
     backgroundColor: "#c2cbd7",
     alignItems: "center",
     padding: 20,
     borderRadius: 15,
+    elevation: 2,
   },
 
   row: {
