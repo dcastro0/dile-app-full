@@ -2,7 +2,6 @@ import { db } from "@/prisma";
 import serviceSchema from "@/schemas/serviceSchema";
 import { z } from "zod";
 
-
 export async function POST(request: Request): Promise<Response> {
   try {
     const data = await request.json();
@@ -28,7 +27,7 @@ export async function POST(request: Request): Promise<Response> {
         price: parseFloat(price),
         observation,
         progress,
-        completed: progress === 8? true : false,
+        completed: progress === 8 ? true : false,
         category_id: 1,
         resolved_item: {
           create: resolved_item.map((item) => ({
@@ -41,17 +40,31 @@ export async function POST(request: Request): Promise<Response> {
       },
     });
 
-    return new Response(JSON.stringify(service), { status: 201 });
+    return new Response(JSON.stringify(service), {
+      status: 201,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(
         JSON.stringify({ error: error.errors.map((e) => e.message) }),
-        { status: 400 }
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
     }
+
     console.error("Error creating service:", error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   }
 }

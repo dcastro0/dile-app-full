@@ -1,7 +1,6 @@
 import { db } from "@/prisma";
 
-
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<Response> {
   const date = new Date();
   const today = date.toISOString().slice(0, 10);
 
@@ -35,17 +34,33 @@ export async function GET(request: Request) {
       },
     });
 
-    // Use NextResponse.json se estiver usando Next.js API routes
-    return Response.json({
-      today: hoje,
-      week: week,
-      inProgress: inProgress,
-      canceled: canceled,
-    });
+    return new Response(
+      JSON.stringify({
+        today: hoje,
+        week: week,
+        inProgress: inProgress,
+        canceled: canceled,
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
-    // Use NextResponse.json se estiver usando Next.js API routes
-    return Response.json({
-      error: "Ocorreu um erro ao processar a solicitação.",
-    });
+    console.error("Error fetching service counts:", error);
+
+    return new Response(
+      JSON.stringify({
+        error: "Ocorreu um erro ao processar a solicitação.",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }

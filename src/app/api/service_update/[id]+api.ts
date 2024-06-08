@@ -44,9 +44,9 @@ export async function PUT(request: Request): Promise<Response> {
         price: parseFloat(price),
         observation,
         progress,
-        completed: progress === 8 ? true : false,
+        completed: progress === 8,
         resolved_item: {
-          deleteMany: {}, 
+          deleteMany: {},
           create: resolved_item.map((item) => ({ name: item.name })),
         },
       },
@@ -55,18 +55,32 @@ export async function PUT(request: Request): Promise<Response> {
       },
     });
 
-    return new Response(JSON.stringify(service), { status: 200 });
+    return new Response(JSON.stringify(service), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Validation error:", error.errors);
       return new Response(
         JSON.stringify({ error: error.errors.map((e) => e.message) }),
-        { status: 400 }
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
     }
+
     console.error("Error updating service:", error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   }
 }
