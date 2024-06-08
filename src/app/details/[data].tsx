@@ -1,4 +1,5 @@
 import { ResolvedItem } from "@/interfaces/CardServicesProps";
+import { api } from "@/server/api";
 import { COLORS } from "@/styles/colors";
 import { stylesDetails } from "@/styles/stylesDetails";
 import { Feather } from "@expo/vector-icons";
@@ -11,6 +12,7 @@ const Details = () => {
   const { data } = useLocalSearchParams();
   const parseData = JSON.parse(data as string);
   const {
+    id,
     name,
     name_client,
     phone,
@@ -20,6 +22,22 @@ const Details = () => {
     resolved_item,
   } = parseData;
 
+  const archived = async () => {
+    try {
+      await api.patch(`/service_patch/${id}`);
+      console.log("ok");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const saved = async () => {
+    try {
+      await api.patch(`/service_save/${id}`);
+      console.log("ok");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={stylesDetails.container}>
       <View style={stylesDetails.card}>
@@ -30,8 +48,11 @@ const Details = () => {
           >
             <Feather name="edit" color={COLORS.white} size={28} />
           </Link>
-          <Pressable>
+          <Pressable onPress={archived}>
             <Feather name="trash-2" size={28} color={COLORS.red} />
+          </Pressable>
+          <Pressable onPress={saved}>
+            <Feather name="save" size={28} color={COLORS.blue} />
           </Pressable>
         </View>
         <Text style={stylesDetails.text22}>CLIENTE</Text>
@@ -56,13 +77,16 @@ const Details = () => {
         <Text style={stylesDetails.text22}>OBSERVAÇÃO</Text>
         <Text style={stylesDetails.text18}>{observation}</Text>
         <Text style={stylesDetails.text22}>PROGRESSO</Text>
-        <Progress.Bar
-          progress={progress / 8}
-          color={COLORS.blue}
-          width={200}
-          height={20}
-          animationType="timing"
-        />
+        <View>
+          <Progress.Bar
+            progress={progress / 8}
+            color={COLORS.blue}
+            width={200}
+            height={20}
+            animationType="timing"
+          />
+          <Text>{(progress / 8) * 100}%</Text>
+        </View>
         <View style={stylesDetails.price}>
           <Text style={stylesDetails.text22}>VALOR: </Text>
           <Text style={stylesDetails.textPrice}>R$ {price}</Text>

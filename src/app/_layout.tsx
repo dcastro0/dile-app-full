@@ -57,6 +57,10 @@ export default function Layout() {
           name="updateForm/[onData]"
           options={{ headerShown: true, title: "ATUALIZAR" }}
         />
+        <Stack.Screen
+          name="archived"
+          options={{ headerShown: true, title: "ARQUIVDOS" }}
+        />
       </Stack>
     </AuthProvider>
   );

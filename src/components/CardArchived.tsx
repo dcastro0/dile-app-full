@@ -1,25 +1,35 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
+import { COLORS } from "@/styles/colors";
+import { router } from "expo-router";
 
 interface CompletedProps {
   onData: CardCompletedProps;
 }
 
-const CardCompleted: React.FC<CompletedProps> = React.memo(({ onData }) => {
+const CardArchived: React.FC<CompletedProps> = React.memo(({ onData }) => {
   const { name, data } = onData;
 
   return (
-    <View style={stylesCompleted.card}>
+    <Pressable
+      onPress={() =>
+        router.navigate({
+          pathname: "/details/[data]",
+          params: { data: JSON.stringify(onData) },
+        })
+      }
+      style={stylesCompleted.card}
+    >
       <View style={stylesCompleted.row}>
         <Feather
-          name="check-circle"
-          color="#41AE76"
+          name="archive"
+          color={COLORS.blue}
           size={50}
           accessible
-          accessibilityLabel="Completed Icon"
+          accessibilityLabel="Archive Icon"
         />
         <Text style={stylesCompleted.title}>{name}</Text>
       </View>
@@ -32,8 +42,8 @@ const CardCompleted: React.FC<CompletedProps> = React.memo(({ onData }) => {
           accessibilityLabel="Folder Icon"
         />
       </View>
-    </View>
+    </Pressable>
   );
 });
 
-export { CardCompleted };
+export { CardArchived };

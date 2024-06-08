@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { stylesProfile } from "@/styles/stylesProfile";
 import { ScreenProps } from "@/types/ScreenProps";
 import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React from "react";
 import { Text, Pressable, View } from "react-native";
 
@@ -25,7 +26,10 @@ const Profile: React.FC<ScreenProps> = () => {
         <Text style={stylesProfile.text}>Segurança</Text>
         <Feather name="chevron-right" size={30} color="#122f61" />
       </Pressable>
-      <Pressable style={stylesProfile.row}>
+      <Pressable
+        style={stylesProfile.row}
+        onPress={() => router.navigate("/archived")}
+      >
         <View style={stylesProfile.circle}>
           <Feather name="folder" size={20} color="#122f61" />
         </View>
