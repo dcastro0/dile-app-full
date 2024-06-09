@@ -6,26 +6,27 @@ import {
   ListRenderItemInfo,
   ActivityIndicator,
   RefreshControl,
+  ScrollView,
 } from "react-native";
-import axios from "axios";
 import { CardCompleted } from "@/components/CardCompleted";
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
 import { ScreenProps } from "@/types/ScreenProps";
 import { api } from "@/server/api";
+import { stylesFormService } from "@/styles/styleFormService";
 
 const Completed: React.FC<ScreenProps> = () => {
   const [dataCompleted, setDataCompleted] = useState<CardCompletedProps[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchData = useCallback(async () => {
     try {
       const response = await api.get("/completed");
       setDataCompleted(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.error("Erro ao buscar os serviços finalizados:", error);
+      setErrorMessage("Erro ao carregar os dados. Por favor, tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -33,7 +34,7 @@ const Completed: React.FC<ScreenProps> = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -50,6 +51,14 @@ const Completed: React.FC<ScreenProps> = () => {
     <View style={stylesCompleted.container}>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
+      ) : errorMessage ? (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <Text style={stylesFormService.errorText}>{errorMessage}</Text>
+        </ScrollView>
       ) : dataCompleted.length > 0 ? (
         <FlatList
           data={dataCompleted}

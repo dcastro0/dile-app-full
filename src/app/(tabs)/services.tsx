@@ -1,32 +1,34 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  ListRenderItemInfo,
-  ActivityIndicator,
-  RefreshControl,
-} from "react-native";
-import { Link } from "expo-router";
-import { Feather } from "@expo/vector-icons";
 import { CardServices } from "@/components/CardServices";
 import { CardServicesProps } from "@/interfaces/CardServicesProps";
-import { stylesServices } from "@/styles/stylesServices";
-import { ScreenProps } from "@/types/ScreenProps";
 import { api } from "@/server/api";
+import { stylesFormService } from "@/styles/styleFormService";
+import { stylesServices } from "@/styles/stylesServices";
+import { Feather } from "@expo/vector-icons";
+import { Link } from "expo-router";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
+import {
+  ListRenderItemInfo,
+  View,
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  ScrollView,
+} from "react-native";
+import { ScreenProps } from "react-native-screens";
 
 const Services: React.FC<ScreenProps> = () => {
   const [dataCompleted, setDataCompleted] = useState<CardServicesProps[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchData = useCallback(async () => {
     try {
       const response = await api.get("/service");
       setDataCompleted(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.error("Erro ao buscar os serviços:", error);
+      setErrorMessage("Erro ao carregar os dados. Por favor, tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -51,6 +53,14 @@ const Services: React.FC<ScreenProps> = () => {
     <View style={stylesServices.container}>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
+      ) : errorMessage ? (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <Text style={stylesFormService.errorText}>{errorMessage}</Text>
+        </ScrollView>
       ) : dataCompleted.length > 0 ? (
         <FlatList
           keyExtractor={(item) => item.id.toString()} // Converter o id para string

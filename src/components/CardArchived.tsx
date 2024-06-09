@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
@@ -14,7 +14,7 @@ const CardArchived: React.FC<CompletedProps> = React.memo(({ onData }) => {
   const { name, data } = onData;
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() =>
         router.navigate({
           pathname: "/details/[data]",
@@ -42,7 +42,7 @@ const CardArchived: React.FC<CompletedProps> = React.memo(({ onData }) => {
           accessibilityLabel="Folder Icon"
         />
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 });
 

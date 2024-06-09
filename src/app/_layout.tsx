@@ -1,8 +1,8 @@
 import { AuthProvider } from "@/contexts/Auth";
 import { Feather } from "@expo/vector-icons";
-import { Link, Stack, router } from "expo-router";
+import { Stack, router } from "expo-router";
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable, TouchableOpacity } from "react-native";
 
 export default function Layout() {
   function back() {
@@ -19,14 +19,14 @@ export default function Layout() {
             backgroundColor: "#6D7F9D",
           },
           headerLeft: () => (
-            <Link href="/services">
+            <TouchableOpacity onPress={() => router.back()}>
               <Feather
                 name="chevron-left"
                 color="#122F61"
                 size={40}
                 style={{ marginHorizontal: 20 }}
               />
-            </Link>
+            </TouchableOpacity>
           ),
           headerRight: () => (
             <Pressable onPress={back}>
@@ -59,7 +59,7 @@ export default function Layout() {
         />
         <Stack.Screen
           name="archived"
-          options={{ headerShown: true, title: "ARQUIVDOS" }}
+          options={{ headerShown: true, title: "ARQUIVADOS" }}
         />
         <Stack.Screen name="register" />
       </Stack>

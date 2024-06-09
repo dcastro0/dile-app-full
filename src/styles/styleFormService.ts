@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "./colors";
 
 const stylesFormService = StyleSheet.create({
   scroll: {
@@ -112,6 +113,11 @@ const stylesFormService = StyleSheet.create({
   },
   modalText: {
     fontSize: 18,
+    fontWeight: "bold",
+  },
+
+  errorText: {
+    color: COLORS.red,
     fontWeight: "bold",
   },
 });

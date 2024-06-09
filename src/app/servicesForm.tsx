@@ -12,7 +12,9 @@ import { api } from "@/server/api";
 type FormData = z.infer<typeof serviceSchema>;
 
 export default function ServicesForm() {
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const {
     control,
@@ -39,17 +41,20 @@ export default function ServicesForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await api.post("/service_post", data);
-      console.log(response.data);
-      setShowConfirmation(true);
+      await api.post("/service_post", data);
+      setModalMessage("Formulário enviado com sucesso!");
+      setIsError(false);
+    } catch (error) {
+      setModalMessage(
+        "Erro ao enviar o formulário. Por favor, tente novamente."
+      );
+      setIsError(true);
+    } finally {
+      setShowModal(true);
       setTimeout(() => {
-        setShowConfirmation(false);
+        setShowModal(false);
         reset();
       }, 2000);
-    } catch (error) {
-      console.error("Erro ao enviar o formulário:", error);
-    } finally {
-      console.log(data);
     }
   };
 
@@ -207,12 +212,14 @@ export default function ServicesForm() {
         />
       </View>
 
-      <Modal visible={showConfirmation} transparent={true} animationType="fade">
+      <Modal visible={showModal} transparent={true} animationType="fade">
         <View style={stylesFormService.modalContainer}>
           <View style={stylesFormService.modalContent}>
-            <Text style={stylesFormService.modalText}>
-              Formulário enviado com sucesso!
-            </Text>
+            {isError ? (
+              <Text style={stylesFormService.errorText}>{modalMessage}</Text>
+            ) : (
+              <Text style={stylesFormService.modalText}>{modalMessage}</Text>
+            )}
           </View>
         </View>
       </Modal>

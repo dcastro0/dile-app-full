@@ -1,16 +1,22 @@
+import { StatusBar, setStatusBarStyle } from "expo-status-bar";
 import { CardProfile } from "@/components/CardProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { stylesProfile } from "@/styles/stylesProfile";
 import { ScreenProps } from "@/types/ScreenProps";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
 const Profile: React.FC<ScreenProps> = () => {
   const { signOut, authData } = useAuth();
+
+  useEffect(() => {
+    setStatusBarStyle("dark");
+  }, []);
   return (
     <View style={stylesProfile.container}>
+      <StatusBar style="dark" />
       <CardProfile name={authData?.name} token={authData?.token ?? ""} />
 
       <TouchableOpacity

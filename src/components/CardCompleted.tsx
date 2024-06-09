@@ -1,8 +1,9 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
+import { router } from "expo-router";
 
 interface CompletedProps {
   onData: CardCompletedProps;
@@ -12,7 +13,15 @@ const CardCompleted: React.FC<CompletedProps> = React.memo(({ onData }) => {
   const { name, data } = onData;
 
   return (
-    <View style={stylesCompleted.card}>
+    <TouchableOpacity
+      onPress={() =>
+        router.navigate({
+          pathname: "/details/[data]",
+          params: { data: JSON.stringify(onData) },
+        })
+      }
+      style={stylesCompleted.card}
+    >
       <View style={stylesCompleted.row}>
         <Feather
           name="check-circle"
@@ -32,7 +41,7 @@ const CardCompleted: React.FC<CompletedProps> = React.memo(({ onData }) => {
           accessibilityLabel="Folder Icon"
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 });
 
