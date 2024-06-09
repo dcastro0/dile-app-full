@@ -10,7 +10,6 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-
 import { CardCompletedProps } from "@/interfaces/CardCompletedProps";
 import { stylesCompleted } from "@/styles/stylesCompleted";
 import { ScreenProps } from "@/types/ScreenProps";

@@ -1,4 +1,4 @@
-import { StatusBar, setStatusBarStyle } from "expo-status-bar";
+import { setStatusBarStyle } from "expo-status-bar";
 import { CardProfile } from "@/components/CardProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { stylesProfile } from "@/styles/stylesProfile";
@@ -16,7 +16,6 @@ const Profile: React.FC<ScreenProps> = () => {
   }, []);
   return (
     <View style={stylesProfile.container}>
-      <StatusBar style="dark" />
       <CardProfile name={authData?.name} token={authData?.token ?? ""} />
 
       <TouchableOpacity
