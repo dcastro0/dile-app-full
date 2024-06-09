@@ -6,26 +6,26 @@ import { SplashScreen, router } from "expo-router";
 import { useFonts, Aldrich_400Regular } from "@expo-google-fonts/aldrich";
 import { MyButton } from "@/components/MyButton";
 import { MyController } from "@/components/MyController";
-import { useAuth } from "@/hooks/useAuth";
 import { stylesLogin } from "@/styles/stylesLogin";
-import { SignInProp } from "@/interfaces/AuthContextData";
 import { stylesFormService } from "@/styles/styleFormService";
-import { loginSchema } from "@/schemas/loginSchema";
+import { registerSchema } from "@/schemas/registerSchema";
+import { api } from "@/server/api";
+import { RegisterProps } from "@/interfaces/RegisterProps";
 
-const Login = () => {
+const Register = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
+      name: "",
     },
   });
 
-  const { signIn } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
@@ -43,10 +43,12 @@ const Login = () => {
     return null;
   }
 
-  const onSubmit = async (data: SignInProp) => {
+  const onSubmit = async (data: RegisterProps) => {
     try {
-      await signIn(data);
-      router.replace("/");
+      await api.post("/register", data);
+      setTimeout(() => {
+        router.replace("/sig-in");
+      }, 2000);
     } catch (error) {
       if (error instanceof Error) {
         setModalMessage(error.message);
@@ -75,7 +77,7 @@ const Login = () => {
         <View style={stylesLogin.line}></View>
         <View style={stylesLogin.form}>
           <View>
-            <Text style={stylesLogin.titleform}>SIGN IN</Text>
+            <Text style={stylesLogin.titleform}>REGISTRAR NOVA CONTA</Text>
           </View>
           <View>
             <MyController
@@ -87,6 +89,18 @@ const Login = () => {
             />
             {errors.email && (
               <Text style={{ color: "red" }}>{errors.email.message}</Text>
+            )}
+          </View>
+          <View>
+            <MyController
+              placeholder="Nome"
+              control={control}
+              style={stylesLogin.input}
+              name="name"
+              inputMode="text"
+            />
+            {errors.name && (
+              <Text style={{ color: "red" }}>{errors.name.message}</Text>
             )}
           </View>
           <View>
@@ -107,9 +121,9 @@ const Login = () => {
           <View>
             <Pressable
               style={stylesLogin.register}
-              onPress={() => router.replace("/register")}
+              onPress={() => router.replace("/sign-in")}
             >
-              <Text style={stylesLogin.newaccount}>Crir nova conta</Text>
+              <Text style={stylesLogin.newaccount}>Fazer Login</Text>
             </Pressable>
           </View>
         </View>
@@ -130,4 +144,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

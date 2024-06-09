@@ -2,17 +2,17 @@ import { z } from "zod";
 
 const serviceSchema = z.object({
   id: z.number().nullish(),
-  name: z.string().min(1, "Name is required"),
-  name_client: z.string().min(1, "Client name is required"),
-  phone: z.string().min(1, "Phone is required"),
-  price: z.string().min(1, "Price is required"),
-  observation: z.string().min(1, "Observation is required"),
-  progress: z.number().int().min(1, "Choose progress level"),
+  name: z.string().min(1, "Nome é obrigatório"),
+  name_client: z.string().min(1, "Nome do Cliente é obrigatório"),
+  phone: z.string().min(1, "Telefone é obrigatório"),
+  price: z.string().min(1, "Valor é obrigatório"),
+  observation: z.string().min(1, "Observação é obrigatório"),
+  progress: z.number().int().min(1, "Escolha o nível de progresso"),
   resolved_item: z.array(
     z.object({
-      name: z.string().min(1, "Resolved item name is required"),
+      name: z.string().min(1, "O item resolvido é obrigatório"),
     })
   ),
 });
 
-export default serviceSchema
+export default serviceSchema;

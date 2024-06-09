@@ -51,7 +51,7 @@ export default function Layout() {
         />
         <Stack.Screen
           name="details/[data]"
-          options={{ headerShown: true, title: "Detalhes" }}
+          options={{ headerShown: true, title: "DETALHES" }}
         />
         <Stack.Screen
           name="updateForm/[onData]"
@@ -61,6 +61,7 @@ export default function Layout() {
           name="archived"
           options={{ headerShown: true, title: "ARQUIVDOS" }}
         />
+        <Stack.Screen name="register" />
       </Stack>
     </AuthProvider>
   );

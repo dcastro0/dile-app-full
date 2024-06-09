@@ -4,7 +4,7 @@ const stylesHome = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     backgroundColor: "#E7EAEF",
   },
 

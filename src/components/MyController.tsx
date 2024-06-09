@@ -1,7 +1,6 @@
 import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
-import { Text, TextInput, TextInputProps, View } from "react-native";
+import { TextInput, TextInputProps, View } from "react-native";
 import React from "react";
-import { stylesFormService } from "@/styles/styleFormService";
 
 function MyController<FormType extends FieldValues>({
   control,

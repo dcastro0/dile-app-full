@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthContextData } from "@/interfaces/AuthContextData";
+import { AuthContextData, SignInProp } from "@/interfaces/AuthContextData";
 import { AuthData } from "@/interfaces/AuthData";
 import { AuthProviderProps } from "@/interfaces/AuthProviderProps";
 import { authService } from "@/services/authService";
@@ -23,15 +23,18 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setAuthData(JSON.parse(auth));
       }
     } catch (error) {
-      console.error("Erro ao carregar dados de autenticação do armazenamento:", error);
+      console.error(
+        "Erro ao carregar dados de autenticação do armazenamento:",
+        error
+      );
     } finally {
       setLoading(false);
     }
   }
 
-  async function signIn(username: string, password: string): Promise<void> {
+  async function signIn(data: SignInProp): Promise<void> {
     try {
-      const auth = await authService.signIn(username, password);
+      const auth = await authService.signIn(data);
       setAuthData(auth);
       AsyncStorage.setItem("@AuthData", JSON.stringify(auth));
     } catch (error: any) {

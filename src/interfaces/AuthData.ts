@@ -5,7 +5,7 @@ interface AuthData {
   /** Token de autenticação. */
   token: string;
   /** Nome de usuário (opcional). */
-  username?: string;
+  email?: string;
   /** Nome do usuário (opcional). */
   name?: string;
 }

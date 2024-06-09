@@ -50,20 +50,6 @@ const Home: React.FC<ScreenProps> = () => {
         )}
       </View>
       <View style={stylesHome.line}></View>
-
-      <View style={stylesHome.cardsColumn}>
-        <Text style={stylesHome.textBlue24}>SERVIÇOS TOTAIS</Text>
-        <View style={stylesHome.row}>
-          <Feather name="chevron-left" color="#122F61" />
-          <Text style={stylesHome.textBlue16}>Janeiro/2024</Text>
-          <Feather name="chevron-right" color="#122F61" />
-        </View>
-        <View style={stylesHome.cards}>
-          <MyCard title="CRÍTICO" amount={10} />
-          <MyCard title="ALTA" amount={10} />
-          <MyCard title="MÉDIA" amount={10} />
-        </View>
-      </View>
     </SafeAreaView>
   );
 };

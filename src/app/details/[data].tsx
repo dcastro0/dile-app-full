@@ -1,15 +1,18 @@
 import { ResolvedItem } from "@/interfaces/CardServicesProps";
 import { api } from "@/server/api";
 import { COLORS } from "@/styles/colors";
+import { stylesFormService } from "@/styles/styleFormService";
 import { stylesDetails } from "@/styles/stylesDetails";
 import { Feather } from "@expo/vector-icons";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Link, router, useLocalSearchParams, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Modal, Pressable, Text, View } from "react-native";
 import * as Progress from "react-native-progress";
 
 const Details = () => {
   const { data } = useLocalSearchParams();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const parseData = JSON.parse(data as string);
   const {
     id,
@@ -25,17 +28,35 @@ const Details = () => {
   const archived = async () => {
     try {
       await api.patch(`/service_patch/${id}`);
-      console.log("ok");
+      setModalVisible(true);
+      setModalMessage("O item foi arquivado!");
+      setTimeout(() => {
+        router.back();
+      }, 1500);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        setModalMessage(error.message);
+      } else {
+        setModalMessage("Erro desconhecido");
+      }
+      setModalVisible(true);
     }
   };
   const saved = async () => {
     try {
       await api.patch(`/service_save/${id}`);
-      console.log("ok");
+      setModalVisible(true);
+      setTimeout(() => {
+        router.back();
+      }, 1500);
+      setModalMessage("Removido de itens Arquivados!");
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        setModalMessage(error.message);
+      } else {
+        setModalMessage("Erro desconhecido");
+      }
+      setModalVisible(true);
     }
   };
   return (
@@ -92,6 +113,16 @@ const Details = () => {
           <Text style={stylesDetails.textPrice}>R$ {price}</Text>
         </View>
       </View>
+      <Modal visible={modalVisible} transparent={true} animationType="slide">
+        <Pressable
+          style={stylesFormService.modalContainer}
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={stylesFormService.modalContent}>
+            <Text style={stylesFormService.modalText}>{modalMessage}</Text>
+          </View>
+        </Pressable>
+      </Modal>
     </View>
   );
 };
