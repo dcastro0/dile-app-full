@@ -36,7 +36,7 @@ const Services: React.FC<ScreenProps> = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

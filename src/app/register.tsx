@@ -47,7 +47,7 @@ const Register = () => {
     try {
       await api.post("/register", data);
       setTimeout(() => {
-        router.replace("/sig-in");
+        router.replace("/sign-in");
       }, 2000);
     } catch (error) {
       if (error instanceof Error) {
